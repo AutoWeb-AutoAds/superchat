@@ -1,0 +1,15 @@
+@import url("layout.css");
+@import url("chat.css");
+@import url("synce.css");
+@import url("login-social.css");
+@import url("my_profile.css");
+@import url("bootstrap.css");
+@import url("file.css");
+@import url("bootstrap-theme.css");
+@import url("bootstrap-dialog.css");
+@import url("notification.css");
+@import url("live-stream.css");
+
+/*jqx lib*/
+@import url("../jqx-lib/css/jqx.base.css");
+@import url("../jqx-lib/css/jqx.darkblue.css");

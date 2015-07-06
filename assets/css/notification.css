@@ -1,0 +1,165 @@
+.main-div{
+
+    width: 300px;
+    height: 300px;
+    position: absolute;
+    margin-left: -94px;
+    margin-top: -10px;
+    display: none;
+
+}
+.header-click{
+
+    background-image:url("../../assets/image/icons/notification-head.png");
+    background-size: cover;
+    width: 40px;
+    height: 40px;
+    float: right;
+}
+.body-back-div{
+
+    background-color: #2aa8e3;
+    border-radius: 12px;
+    height: 337px;
+    margin-top: 25px;
+    width: 275px;
+    position: absolute;
+    z-index: 1000;
+    padding: 0;
+
+}
+
+.circle-click{
+
+    border-radius: 50%;
+    height: 37px;
+    width: 37px;
+    cursor: pointer;
+    margin-left: 13px;
+}
+
+.notification-bell img{
+    
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    margin-top: -3px;
+}
+
+/*Notification setting*/
+
+.setting-noti-main{
+    width: 300px;
+    height: 300
+    position: absolute;
+    margin: 0px 0 -7px 5px;
+    display: none;
+}
+
+.chat-setting-header{
+
+    background-image:url("../../assets/image/icons/more-setting-no1.png");
+    background-size: cover;
+    width: 45px;
+    height: 43px;
+
+}
+
+.chat-setting-body{
+
+    background-color:#F2F2F2 ;
+    width: 200px;
+    height: auto;
+    border-radius: 12px;
+    text-align: left;
+    position: absolute;
+    z-index: 1000;
+    margin: -13px 0 0 29px;
+}
+
+.more-setting-circle{
+
+    border-radius: 50%;
+    height: 37px;
+    width: 37px;
+    cursor:pointer;
+    z-index: 1000;
+    position: absolute;
+
+}
+
+
+.notification-label{
+    text-align: left;
+    font-size: 12px;
+    margin: 10px;
+    padding: 12px 0;
+
+}
+.notification-label.logout{
+    text-align: center;
+
+}
+.notification-label.logout label:hover{
+    color: white;
+    cursor: pointer;
+}
+
+.div-noti-form {
+    width: 95%;
+    height: 60px;
+    margin: 0 auto;
+    border-bottom: 1px solid #9acfea;
+    padding: 10px 0px;
+}
+.div-noti-form.cls-border-NA {
+    border: none;
+    cursor: pointer;
+}
+.div-noti-form.dis {
+    display: none;
+}
+.div-noti-form .div-noti-form-profile{
+    width: 40px;;
+    height: 40px;
+    float: left;
+}
+.div-noti-form .div-noti-form-conf {
+    width: 50px;;
+    height: 40px;
+    float: left;
+    /*padding-top: 5px;*/
+}
+.div-noti-form .div-noti-form-conf div{
+    width: 20px;
+    height: 20px;
+    float: left;
+    text-align: right;
+}
+.div-noti-form .div-noti-form-conf div img{
+    cursor: pointer;
+}
+.div-noti-form .div-noti-form-conf .check{
+    padding-left: 5px;
+    width: 25px;
+}
+.div-noti-form .div-noti-form-name{
+    width: 165px;;
+    height: 40px;
+    float: left;
+    padding:5px 0 0 10px;
+    text-align: left;
+    font-size: 11px;
+    color: #ffffff;
+
+}
+.div-noti-form .div-noti-form-profile img{
+    width: 40px;;
+    height: 40px;
+}
+
+.div-co-view-noti {
+    width: 200px;
+    height: 80px;
+    background-color: #006600;
+}

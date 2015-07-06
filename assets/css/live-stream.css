@@ -1,0 +1,429 @@
+/*  General CSS  */
+.input-container-live-stream {
+    background: url(../../assets/image/Sync/search_bar_02.png) no-repeat;
+    width:250px;
+    height:25px;
+    line-height: 25px;
+    background-size: cover;
+    margin: 0 auto;
+}
+
+.input-container-live-stream input{
+    height:25px;
+    background:transparent;
+    padding:0 10px;
+    width:300px;
+    border: 0;
+    outline: 0;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+.input-container-live-stream input.input-text{
+    width: 210px;
+    height: 25px;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+}
+.live-stream-search-block{
+    height:30px;
+    /*padding: 10px 0;*/
+    display: block;
+}
+.videos-container{
+    width: 100%;
+    padding: 1%;
+    display: inline-block;
+}
+.next-previous-page{
+    width: 100%;
+    padding: 0px 10px;
+    display: inline-block;
+    font-size: 12px;
+}
+.page-hover{
+    padding: 5px;
+}
+.page-hover:hover{
+    text-decoration: underline;
+    color: red;
+    cursor: pointer;
+}
+
+.video-thumb {
+    width: 30%;
+}
+.video-thumb img {
+    float: left;
+    width: 95px;
+    height: 70px;
+}
+.video-thumb-name{
+    float: left;
+    width: 60%;
+    height: 100%;
+    color: #167ac6;
+    font-size: 12px;
+    padding-left: 5px;
+}
+.video-thumb-favorite{
+    float: right;
+    width: 7%;
+}
+.video-thumb-favorite img{
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+.video-thumb-name:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}
+.video-thumb:hover{
+    cursor: pointer;
+}
+.playerStreaming{
+    width: 100%;
+    height: 90%;
+    margin: 0 auto;
+    text-align: center;
+    
+}
+.playerStreamings.pop{
+    padding: 10px;
+}
+.playerStreaming.itune{
+    width: 50%;
+    height: 90%;
+    padding-top: 90px;
+    margin: 0 auto;
+    text-align: center;
+}
+.div-null-data {
+    width: 100%;
+    height: 100px;
+    padding-top: 20px;
+    margin: 0 auto;
+    text-align: center;
+}
+.media-label-title{
+    font-size: 12px;
+    font-style: italic;
+    text-align: left;
+    margin-left: 10px;
+    display: block;
+    font-family: sans-serif;
+}
+.playerStreaming video[poster]{
+    height:500px !important;
+    width:900px !important;
+}
+.playerStreaming video[controls]{
+    width: 900px !important;
+    height:455px !important;
+}
+
+/*header streaming*/
+
+.div-streaming-header {
+    width: 100%;
+    height: 102px;
+    padding: 20px 20px;
+    float: left;
+    background-color: #EBF7F3;
+}
+
+.chat-setting-body-stream {
+    display: none;
+    position: absolute;
+    width: 300px;
+    height: 550px;
+    margin-left: 30px;
+    margin-top: -10px;
+    padding: 20px 10px;
+    background-color: #F2F2F2;
+    z-index: 998;
+}
+.chat-stream-header {
+    display: none;
+    position: absolute;;
+    top: auto;
+    z-index: 999;
+}
+.spButton{
+    padding: 10px;
+    cursor: pointer;
+}
+
+#btn-invite {padding-top: 10px;}
+
+.div-player-stream-result,#div-container-box {
+    width: 100%;
+    height: 455px;
+    float: left;
+}
+.div-co-view-noti {
+    width: 250px;
+    height: 50px;
+    padding: 20px;
+    border: 1px solid red;
+    position: absolute;
+    /*margin-top: -100px;*/
+    margin-left: 20px;
+
+}
+
+.chat-invite-request{
+    background-image: url("../../assets/image/icons/Addfile_icon.png") ;
+    width: 40px;
+    height: 40px;
+    background-size: cover;
+    cursor: pointer;
+    background-repeat:no-repeat;
+}
+.chat-invite-request:hover{
+    background-image: url("../../assets/image/icons/More_active_icon.png");
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+}
+.bg-Display-no {
+    background: none;
+}
+.bg-Display-no:hover{
+    background: none;
+}
+/*Activity block*/
+
+.main-activity{
+    display: inline-block;
+    width: 100%;
+    float: left;
+}
+.default-div-playlist{
+    width: 306px;
+    float: left;
+    display: inline-block;
+}
+.title-playlist{
+
+    width: 100%;
+    background-color:#31B0D5;
+    text-align: center;
+    font-size: 15px;
+    color: #ffffff;
+    padding: 3px;
+}
+
+.body-of-playlist{
+    width: 100%;
+    padding: 1px;
+}
+
+
+.bacgk-add-playlist{
+
+    background-color: #ECECEC;
+    width: 100%;
+    padding: 7px;
+    display: inline-block;
+}
+
+.add-playlist-input{
+
+    background: url(../../assets/image/9-Patch/search_bar_04.png) no-repeat;
+    width:189px;
+    height:25px;
+    line-height: 25px;
+    background-size: cover;
+    float: left;
+}
+
+.add-playlist-input input{
+
+    height:25px;
+    background:transparent;
+    padding:0 10px;
+    width:188px;
+    border: 0;
+    outline: 0;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    float: left;
+}
+.btn-add-playlist{
+    float: left;
+    width: 25px;
+    height: 25px;
+}
+
+.btn-circle {
+    width: 25px;
+    height: 25px;
+    text-align: center;
+    padding: 6px 0;
+    font-size: 9px;
+    line-height: 1.428571429;
+    border-radius: 15px;
+}
+.favorite-icon{
+    display: inline-block;
+}
+.favorite-icon img{
+    cursor: pointer;
+}
+
+/*block list video*/
+
+.block-video{
+    display: inline-block;
+    width: 89%;
+    margin-left: 30px;
+}
+.head-of-list-playlist{
+    width: 100%;
+    height: 50px;
+    margin-top: 5px;
+}
+.video-thumb-playlist{
+    float: left;
+    width: 60px;
+    cursor: pointer;
+}
+.video-thumb-playlist img{
+    width: 60px;
+    height: 50px;
+}
+.video-title-playlist{
+    width: 200px;
+    float: left;
+    padding-left: 5px;
+    cursor: pointer;
+    color: darkred;
+    font-size: 11px;
+}
+.video-title-playlist:hover{
+    text-decoration: underline;
+}
+
+
+.main-title-collapse{
+
+    width:100%;
+    display: inline-block;
+}
+.title-collapse{
+
+    width: 80%;
+    padding: 5px;
+    background-color: #D8D8DC;
+    color: #ffffff;
+    cursor: pointer;
+    border-bottom: 1px solid #ffffff;
+    float: left;
+
+}
+
+.div-delete-playlist{
+
+    height: 26px;
+    width: 60px;
+    background-color: #D8D8DC;
+    float: left;
+
+}
+.icon-edit-playlist{
+    height: 20px;
+    width: 20px;
+    float: right;
+    background:url("../../assets/image/Profile/edit_01.png");
+    background-size: cover;
+    cursor: pointer;
+    display: none;
+    margin-top: 3px;
+
+}
+.icon-delete-playlist{
+
+    height: 20px;
+    width: 20px;
+    float: right;
+    background:url("../../assets/image/Profile/cancel_01.png");
+    background-size: cover;
+    display: none;
+    cursor: pointer;
+    margin-left: 3px;
+    margin-top: 3px;
+
+}
+
+.main-title-collapse:hover>.div-delete-playlist>.icon-edit-playlist{
+    display: block;
+}
+.main-title-collapse:hover>.div-delete-playlist>.icon-delete-playlist {
+    display: block;
+}
+.main-body-pop-deletePlaylist{
+    
+    border-bottom: 1px solid darkgrey;
+    width: 100%;
+    height: 426px;
+}
+.pop-footer-div{
+
+    width: 41%;
+    padding: 5px;
+    float: right;
+}
+
+.add-playlist-input input + .tooltip > .tooltip-inner {
+    background-color: orangered;
+    color: #FFFFFF;
+    border: 1px solid orangered;
+    padding: 6px;
+    font-size: 11px;
+    border-radius:0px !important;
+}
+/* Tooltip on top */
+.add-playlist-input input + .tooltip.top > .tooltip-arrow {
+    border-top: 5px solid orangered;
+}
+.media-icons{
+    float: left;
+    width: 6%;
+}
+.media-icons img{
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+}
+.remove-icon{
+    float: left;
+    width: 6%;
+}
+.remove-icon img{
+    cursor: pointer;
+    width: 15px;
+    height: 15px;
+    display: none;
+}
+.head-of-list-playlist:hover>.remove-icon img{
+    display: block;
+}
+.popular-body-container{
+    height: 35px;
+    line-height: 35px;
+    width: 100%;
+}
+.popular-body-img{
+    float: left;
+}
+.popular-body-img img{
+    width: 25px;
+    height: 25px;
+}
+.popular-body-img:hover img{
+    cursor: pointer;
+}

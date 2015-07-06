@@ -1,0 +1,113 @@
+/*  General CSS  */
+html,body{
+    background-color:#ffffff;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+.layout-wrapper{
+    width:1200px;
+    margin: 0 auto;
+    padding: 0;
+    height: 100%;
+    position: relative;
+}
+#body_container_0 ,#body_container_1 {
+    border: 0px solid #EBF7F3;
+    background-color: #D6EEE7;
+}
+#body_container_2,#body_container_3,#body_container_4{
+    border: 0px solid #EBF7F3;
+}
+
+.div-box-center {
+    width: 77%;
+    float: left;
+    overflow: hidden;
+}
+.div-box-left{
+    width: 23%;
+    float: left;
+    background-color: white;
+    min-height: 700px;
+    max-height: 999px;
+    border-right: 1px solid #EBF7F3;
+}
+
+.div-box-right{
+    display: none;
+    width: 250px;
+    float: right;
+    position: relative;;
+}
+.div-wraper-container{
+    width: 77%;
+    float: left;
+    margin: 0 auto;
+    border-right: 0px solid #EBF7F3;
+}
+
+
+/*  ----------------header layout--------------*/
+#ul-module>.jqx-fill-state-hover {
+    border: 0px solid #000000 !important;
+    border-radius: 0px !important;
+    height: 30px !important;
+}
+
+#jqxTabs>.jqx-widget-header{
+    height: 29px !important;
+}
+#jqxTabs>.jqx-widget-header:hover{
+    height:29px !important;
+}
+#jqxTabs>.jqx-tabs-headerWrapper>.jqx-tabs-title-container>.jqx-tabs-title-selected-top{
+    margin: -1px 1px !important;
+}
+div#jqxTabsModules>ul li {
+    list-style: none !important;
+}
+#ul-module>.jqx-tabs-title-selected-top{
+    background:rgba(255,255,255,0.5) !important;
+}
+
+#label-header-left {
+    position: absolute;
+    z-index: 999;
+    line-height: 47px;
+    color: #000000;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    right: 60%;
+    text-align: center;
+
+}
+#label-header-right {
+    right:1%;
+    width:200px;
+    text-align: right;
+    float: right;
+    position: absolute;
+    padding-top: 15px;
+    z-index: 999;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+}
+#label-header-right a {
+    color: #000000;
+    text-decoration: none;
+}
+
+/*  end of header */
+
+.float-left{
+    float: left;
+}
+.float-right{
+    float: right;
+}
+.clear-both{
+    clear: both;
+}
+

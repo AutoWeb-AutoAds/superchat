@@ -1,0 +1,5 @@
+<<<<<<< HEAD
+=======
+<?php
+define('BASE_URL', 'http://localhost/SuperChat');
+>>>>>>> 8692c533ed4e14bc6e30463252d3d44128e13626
