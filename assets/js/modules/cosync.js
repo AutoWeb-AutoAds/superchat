@@ -230,7 +230,7 @@ var func_createGroups = function(){
         SocialMediaTypeID = mediaTypes('number',mediaType);
     }
 //if media is twitch we use ObjeSWF to play
-    if(document.getElementsByTagName('object').length>0){
+    if(document.getElementsByTagName('object')){
         var dataObj = document.getElementsByTagName('object');
         var twitchUrl =  $('[name=flashvars]').val();
         console.log(document.getElementsByTagName('object'));

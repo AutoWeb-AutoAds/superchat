@@ -40,9 +40,6 @@
 
             </div>
         </div>
-        <div class="chat-settings-pic">
-            <div class="chat-more-options-img" onclick="fun_test()"><div class="chat-setting-header chat-stream-header" id="chat-setting-header"></div></div>
-        </div>
     </div>
     <div id="div-container-box">
         <div class="div-player-stream-result" id="div-player-stream-result"></div>
