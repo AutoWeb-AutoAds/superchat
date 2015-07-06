@@ -81,9 +81,23 @@ var cosync = function(broadcastId,requestId,isPrivate,cosyncData,callback){
 }
 
 var func_fadeTaggle = function(result){
-    $("#"+result).fadeToggle();
+    if(document.getElementById("video")){
+        $("#"+result).fadeToggle();
+        $("#chat-setting-header").fadeToggle();
+    }else if(document.getElementsByTagName('object') && document.getElementsByTagName('object').length>0){
 
-    $("#chat-setting-header").fadeToggle();
+        $("#"+result).fadeToggle();
+        $("#chat-setting-header").fadeToggle();
+
+    }else{
+        $("#messageNotification").jqxNotification({
+            width: 270, position: "top-right", opacity: 0.9,
+            autoOpen: false, animationOpenDelay: 800, autoClose: true, autoCloseDelay: 16000, template: "info"
+        });
+        $('#msg_notifi').html('please select Video befor you Invite');
+        $("#messageNotification").jqxNotification("open");
+    }
+
 }
 
 var func_searchFri = function(txt){
@@ -125,6 +139,7 @@ var acceptCoInvite = function(data){
 
 var GroupChat = {data:[]};
 var checkp = 0;
+
 var addContact = function(userId){
     var friendId = localStorage.getItem('friendId');
     var tabIndex = localStorage.getItem('tabIndex');
@@ -211,12 +226,12 @@ var func_createGroups = function(){
     if(GroupChat.data.length>0){
         for(checkp =0; checkp < GroupChat.data.length; checkp++){
             $.each(GroupChat.data[checkp],function(index, value){
-                    var jsObj = JSON.parse(value.addId);
+                var jsObj = JSON.parse(value.addId);
 
-                    $.each(jsObj, function(index , values){
+                $.each(jsObj, function(index , values){
 
-                        addMember.push(values.friendId);
-                    });
+                    addMember.push(values.friendId);
+                });
 
             });
 
@@ -233,12 +248,13 @@ var func_createGroups = function(){
     if(document.getElementsByTagName('object')){
         var dataObj = document.getElementsByTagName('object');
         var twitchUrl =  $('[name=flashvars]').val();
-        console.log(document.getElementsByTagName('object'));
-        var ArrayUrl = twitchUrl.split('&');
-        ArrayUrl = ArrayUrl[2].split('=');
-        Displayname = ArrayUrl[1];
-        SocialMediaTypeID = 7;
-        url = dataObj[0].data;
+        var ArrayUrl= '';
+        if(dataObj.length>0){
+            ArrayUrl = twitchUrl.split('&');
+            ArrayUrl = ArrayUrl[2].split('=');
+            Displayname = ArrayUrl[1];
+            SocialMediaTypeID = 7;
+        }
     }
 
 
@@ -372,9 +388,9 @@ var createPlaylist = function(PlaylistName,callback){
     socketIoCon.on('createPlaylist-result', function (datas) {
         var json = JSON.parse(datas);
         var obj = JSON.parse(json.Body.Data);
-            if(callback){
-                callback(obj);
-            }
+        if(callback){
+            callback(obj);
+        }
     });
 
 };
@@ -382,7 +398,7 @@ var createPlaylist = function(PlaylistName,callback){
 var getPlaylist = function(callback){
     var getPlaylist = {
         "Header": {
-        "From": "",
+            "From": "",
             "To": "",
             "DateTime": "",
             "PartnerID": "",
@@ -392,13 +408,13 @@ var getPlaylist = function(callback){
             "DeviceOS": "",
             "FromIP": "",
             "Region": "enUS"
-    },
+        },
         "Body": {
-        "ID": "",
+            "ID": "",
             "ObjectType": "1000",
             "Action": "100",
             "Data": {
-            "AccessKey" : localStorage['access_key'],
+                "AccessKey" : localStorage['access_key'],
                 "Limit":"",
                 "Offset":""
             }
@@ -411,9 +427,9 @@ var getPlaylist = function(callback){
         var json = JSON.parse(datas);
         var obj = JSON.parse(json.Body.Data);
 
-            if(callback){
-                callback(obj);
-            }
+        if(callback){
+            callback(obj);
+        }
 
     });
 }
