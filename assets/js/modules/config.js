@@ -1,5 +1,5 @@
 var jqxTheme = "";
-var basePath = "http://superchatui.com";
+var basePath = "http://superchat.com";
 var amazoneSuperchatDev = "http://s3.amazonaws.com/superchat-dev";
 var isConnection = "connecting";
 var developmentIPAddress = "http://54.172.34.141:2000";
