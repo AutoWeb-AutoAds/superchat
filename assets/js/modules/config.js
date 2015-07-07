@@ -1,9 +1,9 @@
 var jqxTheme = "";
-var basePath = "http://superchat.com";
+var basePath = "http://superchatui.com";
 var amazoneSuperchatDev = "http://s3.amazonaws.com/superchat-dev";
 var isConnection = "connecting";
 var developmentIPAddress = "http://54.172.34.141:2000";
-
+var ownerID = localStorage.getItem('user_id');
 
 // ********************** label goes here *************************
 var chatLbl = "Chat";

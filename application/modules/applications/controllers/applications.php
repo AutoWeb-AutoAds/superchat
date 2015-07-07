@@ -10,8 +10,7 @@ class Applications extends MX_Controller {
 		}else{
 			$this->load->view('template',$data);
 		}
-
-
 	}
+
 
 }

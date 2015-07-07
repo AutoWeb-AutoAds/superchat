@@ -5,7 +5,6 @@
             <div class="chat-settings-pic"><div class="chat-audio-call-img" id="btn-audio-call_<?php echo $friendId;?>"></div></div>
             <div class="chat-settings-pic"><div class="chat-sms-img" id="btn-sms_<?php echo $friendId;?>"></div></div>
             <div class="chat-settings-pic"><div class="chat-email-img" id="btn-email_<?php echo $friendId;?>"></div></div>
-
             <div class="chat-settings-pic">
 
                 <div class="chat-more-options-img" id="chat-more-options-img_<?php echo $friendId;?>"></div>
@@ -32,8 +31,6 @@
         </div>
 
     </div>
-
-
     <div class="chat-container" id="msgResult_<?php echo $friendId;?>"></div>
     <!-- Chat notification left panel-->
     <div class="notificationContainer" id="notification-container-left<?php echo $friendId;?>">
@@ -103,6 +100,7 @@
                 </div>
             </div>
             <div class="send-msg-icon" id="btn-send_<?php echo $friendId;?>" data-chatType="<?php echo $chatType;?>" data-socialTypeID="<?php echo $socialTypeID;?>" data-friendID="<?php echo $friendId;?>" onclick="sendTextChat(this)"></div>
+            <div><input class="emojis-wysiwyg"></div>
         </form>
 
     </div>
@@ -150,6 +148,10 @@
 
 <script>
     $(document).ready(function(e){
+        $('.emojis-wysiwyg').emojiarea();
+
+
+
         var friendId = '<?php echo $friendId;?>';
         var itemResult = $("#msgResult_"+friendId);
         var height = $( "#div-box-left" ).height() -120;
@@ -344,3 +346,4 @@
 <style>
     .jqx-tabs-content-element.jqx-rc-b{overflow: hidden;}
 </style>
+

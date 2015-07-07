@@ -5,7 +5,6 @@
         <div class="div-input"><input type="password" id="yahoo-password" placeholder="Password"></div>
         <div class="message-error" id="message-error"></div>
     </div>
-    <div class="float-right"><button type="button" id="btn-cancel-yahoo" class="btn btn-default">Cancel</button></div>
     <div class="float-right"><button type="button" id="btn-signin-yh-filter" class="btn btn-primary active">Sign In</button></div>
 </div>
 <script>
@@ -54,9 +53,6 @@
                     }
                 },'div-contact-scroll-left');
             });
-        });
-        $('#btn-cancel-yahoo').on('click',function(){
-            closeJqxWindowId('div-yahoo-login-pop');
         });
         $('#yahoo-username, #yahoo-password').keypress(function(event){
             var keycode = (event.keyCode ? event.keyCode : event.which);

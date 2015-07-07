@@ -607,17 +607,20 @@ var func_IntiCoview = function(response){
         if(value.FriendID == senderID){
             var imageAvatar = value.ImageAvatar != '' ? value.ImageAvatar:'assets/image/icons/defaultImg.gif';
             var results = '';
-            results +='<div class="div-noti-form cls-border-NA" data-senderID="'+senderID+'" data-GroupID="'+GroupID+'" data-DisplayName="'+value.DisplayName+'"  '+
-                'data-ImageAvatar = "'+imageAvatar+'"  onclick="acceptCoInvite(this)" data-url="'+url+'" data-SocialMediaTypeID="'+SocialMediaTypeID+'" data-Chanel="'+movieNmae+'" '+
-                '>';
+            results +='<div class="div-noti-form cls-border-NA">';
+            results +='<div data-senderID="'+senderID+'" data-GroupID="'+GroupID+'" data-DisplayName="'+value.DisplayName+'"  '+
+            'data-ImageAvatar = "'+imageAvatar+'"  onclick="acceptCoInvite(this)" data-url="'+url+'" data-SocialMediaTypeID="'+SocialMediaTypeID+'" data-Chanel="'+movieNmae+'" '+
+            '>';
             results +='<div class="div-noti-form-profile"><img src="'+imageAvatar+'" class="img-circle"></div>';
             results +='<div class="div-noti-form-name">';
             results +=value.DisplayName+' invited you to see ' +movieNmae;
             results +='</div>';
             results +='</div>';
+            results += '<image src="/assets/jqx-lib/css/images/close.png" data-senderID="'+senderID+'" data-GroupID="'+GroupID+'" onclick="cencelCoView(this)" class="noti_close">';
+            results +='</div>';
             $('#msg_notifi').html(results);
+            $('#messageNotification').jqxNotification({ showCloseButton: false });
             $("#messageNotification").jqxNotification("open");
-
         }
 
     });

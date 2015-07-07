@@ -40,8 +40,9 @@
 
             </div>
         </div>
+
         <div class="chat-settings-pic">
-            <div class="chat-more-options-img" onclick="fun_test()"><div class="chat-setting-header chat-stream-header" id="chat-setting-header"></div></div>
+            <div class="chat-more-options-img" onclick="openCoViewFromChatAction()"><div class="chat-setting-header chat-stream-header" id="chat-setting-header"></div></div>
         </div>
     </div>
     <div id="div-container-box">
@@ -239,23 +240,4 @@ $(function(){
     });
 });
 
-    var fun_test = function(){
-        var url = '';
-        if(document.getElementById("video")){
-            url = document.getElementById("video").getAttribute("src");
-            console.log(url);
-        }
-
-       if(document.getElementsByTagName('object')){
-           var twitchUrl =  $('[name=flashvars]').val();
-
-           var ArrayUrl = twitchUrl.split('&');
-           ArrayUrl = ArrayUrl[2].split('=');
-           console.log(document.getElementsByTagName('object'));
-           console.log(ArrayUrl);
-       }
-
-
-
-    }
 </script>

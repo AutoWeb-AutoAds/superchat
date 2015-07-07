@@ -5,7 +5,6 @@
         <div class="div-input"><input type="password" id="icq-password" placeholder="Password"></div>
         <div class="message-error" id="message-error"></div>
     </div>
-    <div class="float-right"><button type="button" id="btn-cancel-icq" class="btn btn-default">Cancel</button></div>
     <div class="float-right"><button type="button" id="btn-signin-icq-filter" class="btn btn-primary active">Sign In</button></div>
 </div>
 <script>
@@ -55,9 +54,6 @@
             });
         });
 
-        $('#btn-cancel-icq').on('click',function(){
-            closeJqxWindowId('div-icq-login-pop');
-        });
         $('#icq-username, #icq-password').keypress(function(event){
             var keycode = (event.keyCode ? event.keyCode : event.which);
             if(keycode == '13'){

@@ -110,9 +110,9 @@
     height: 60px;
     margin: 0 auto;
     border-bottom: 1px solid #9acfea;
-    padding: 10px 0px;
 }
 .div-noti-form.cls-border-NA {
+    width: 100%;
     border: none;
     cursor: pointer;
 }
@@ -123,6 +123,7 @@
     width: 40px;;
     height: 40px;
     float: left;
+    padding-top: 10px;
 }
 .div-noti-form .div-noti-form-conf {
     width: 50px;;
@@ -144,22 +145,32 @@
     width: 25px;
 }
 .div-noti-form .div-noti-form-name{
-    width: 165px;;
-    height: 40px;
+    width: 170px;
+    height: auto;
+    min-height: 50px;
     float: left;
     padding:5px 0 0 10px;
     text-align: left;
-    font-size: 11px;
-    color: #ffffff;
-
+    font-size: 10px;
+    word-wrap: break-word;
+}
+.div-noti-form.cls-border-NA div .div-noti-form-name{
+    width: 200px;
 }
 .div-noti-form .div-noti-form-profile img{
     width: 40px;;
     height: 40px;
 }
-
+.div-noti-form img.noti_close{
+    position: absolute;
+    margin-top: -10px;
+}
 .div-co-view-noti {
     width: 200px;
     height: 80px;
     background-color: #006600;
+}
+.jqx-notification-container {
+    z-index: 999;
+    position: absolute !important;
 }

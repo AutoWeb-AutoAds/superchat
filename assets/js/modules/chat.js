@@ -2,51 +2,52 @@ $(document).ready(function(){
     getPrivateNotificationChat();
 });
 var appendSmsToScreenAndAddPrivateChat = function(friendId,sATypeID,chatTypeID,fileName,mimeType,content){
-    var jsTabTitle = JSON.parse(localStorage.getItem('tabtile'));
-    if(jsTabTitle != null || jsTabTitle.data != ''){
-        $.each(jsTabTitle.data,function(key,value){
-            if(sATypeID == 5){ //yahoo messenger
-                if(friendId == value.friendId){
-                    sendYahooChat(content,value.sourceFriendID,function(yahooMsg){
-                        if(yahooMsg.code == 1){
-                            getChatFromPrivateChat(friendId,5);
-                        }else{
-                            console.log(yahooMsg);
-                            alert('Session expired. Please login again!');
-                        }
-                    });
+    var hasFriendID;
+    if(sATypeID == 1) {
+        hasFriendID = friendId;
+    }else{
+        hasFriendID = localStorage.getItem('sourceFriendID');
+        if(sATypeID == 5){ //yahoo messenger
+            sendYahooChat(content,hasFriendID,function(yahooMsg){
+                if(yahooMsg.code == 1){
+                    getChatFromPrivateChat(friendId,5);
+                }else{
+                    console.log(yahooMsg);
+                    newJqxWindow('div-alert-area','Session Expired!',250,100,basePath+'/chat/sessionExpired','','');
                 }
-            }else if(sATypeID == 12){//icq
-                if(friendId == value.friendId){
-                    sendIcqChat(content,value.sourceFriendID,'',function(icqMsg){
-                        if(icqMsg.code == 1){
-                            getChatFromPrivateChat(friendId,12);
-                        }else{
-                            console.log(icqMsg);
-                            alert('Session expired. Please login again!');
-                        }
-                    });
+            });
+        }else if(sATypeID == 12){//icq
+            sendIcqChat(content,hasFriendID,'',function(icqMsg){
+                if(icqMsg.code == 1){
+                    getChatFromPrivateChat(friendId,12);
+                }else{
+                    console.log(icqMsg);
+                    newJqxWindow('div-alert-area','Session Expired!',250,100,basePath+'/chat/sessionExpired','','');
                 }
-
-            }else if(sATypeID == 8){//aim
-                if(friendId == value.friendId){
-                    sendAimChat(content,value.sourceFriendID,'',function(aimMsg){
-                        if(aimMsg.code == 1){
-                            getChatFromPrivateChat(friendId,8);
-                        }else{
-                            console.log(aimMsg);
-                            alert('Session expired. Please login again!');
-                        }
-                    });
+            });
+        }else if(sATypeID == 8){//aim
+            console.log(sATypeID);
+            sendAimChat(content,hasFriendID,'',function(aimMsg){
+                if(aimMsg.code == 1){
+                    getChatFromPrivateChat(friendId,8);
+                }else{
+                    console.log(aimMsg);
+                    newJqxWindow('div-alert-area','Session Expired!',250,100,basePath+'/chat/sessionExpired','','');
                 }
-            }
-
-        });
-        if(sATypeID != 1){
-            return true;
+            });
+        }else if(sATypeID == 4){
+            sendGoogleChat(content, hasFriendID, '', function (googleMsg) {
+                if (googleMsg.code == 1) {
+                    console.log(googleMsg);
+                    getChatFromPrivateChat(friendId, 4);
+                } else {
+                    console.log(googleMsg);
+                    newJqxWindow('div-alert-area','Session Expired!',250,100,basePath+'/chat/sessionExpired','','');
+                }
+            });
         }
+        return true;
     }
-
     var addPrivateChat = {
         "Header": {
             "From": "",
@@ -103,19 +104,7 @@ var appendSmsToScreenAndAddPrivateChat = function(friendId,sATypeID,chatTypeID,f
 }
 
 var getChatFromPrivateChat = function(friendId,sATypeID){
-    var jsTabTitle = JSON.parse(localStorage.getItem('tabtile'));
-    var hasFriendID = '';
-    if(sATypeID == 8){
-        if(jsTabTitle != null || jsTabTitle.data != ''){
-            $.each(jsTabTitle.data,function(key,value){
-                if(friendId == value.friendId){
-                    hasFriendID = value.sourceFriendID;
-                }
-            });
-        }
-    }else{
-        hasFriendID = friendId;
-    }
+    var toID = sATypeID == 1 ? friendId:localStorage.getItem('sourceFriendID');
     var privateData =  {
         "Header": {
             "From": "",
@@ -132,7 +121,7 @@ var getChatFromPrivateChat = function(friendId,sATypeID){
             "ObjectType": "1000",
             "Action": "100",
             "Data": {
-                "ToID" : hasFriendID,
+                "ToID" : toID,
                 "AccessKey" : localStorage['access_key'],
                 "SATypeID" : sATypeID,
                 "Limit" : "15",
@@ -315,15 +304,12 @@ var getPrivateNotificationChat = function(){
         var dataListen = output.Body.Data.data;
         switch (action){
             case "ADD_PRIVATE_CHAT":
-                console.log(dataListen);
                 addPrivateChat(dataListen);
                 break;
             case "RECEIVE_CHAT_YAHOO":
-                console.log(dataListen);
                 recieveYahooChat(dataListen);
                 break;
             case "RECEIVE_CHAT_ICQ":
-                console.log(dataListen);
                 recieveIcqChat(dataListen);
                 break;
             case "RECEIVE_CHAT_AIM":
@@ -351,9 +337,14 @@ var getPrivateNotificationChat = function(){
             case "100":
                 func_IntiCoview(dataListen);
                 break;
-            //case "PRESENCE_GTALK":
-            //    console.log('login gtalk');
-            //    break;
+            case "RECEIVE_CHAT_GOOGLE":
+                console.log(output);
+                console.log('receive chat gtalk');
+                receiveGoogleChat(dataListen);
+                break;
+            case "PRESENCE_GTALK":
+                console.log('PRESENCE_GTALK');
+                break;
         }
 
     });
@@ -767,6 +758,7 @@ var func_addTab = function(str_title,friendId,sourceFriendID,eventLoad,func_type
     }else{
         /*----------- set tab sotrage------------*/
         localStorage.setItem('friendId',friendId);
+        localStorage.setItem('sourceFriendID',sourceFriendID);
         if(lc_tabtitle == null){
             localStorage.setItem('tabIndex',length);
             localStorage.setItem('tabtile',JSON.stringify(json_tabTitle));
@@ -817,6 +809,7 @@ var func_addTab = function(str_title,friendId,sourceFriendID,eventLoad,func_type
                         func_viewGroupById(result,'results-div-Group');
                     });
                 }else{
+                    console.log('okay');
                     getChatFromPrivateChat(friendId,socialTypeID);
                 }
                 objArray.data[objArray.data.length] = {"title":str_title,"friendId":friendId,"sourceFriendID":sourceFriendID,"chatType":func_type,"SIPUser":SIPUser,"socialTypeID":socialTypeID};
@@ -840,6 +833,7 @@ var func_TabClick = function(){
             $.each(obArray.data,function(index,value){
                 if(value.title == tabTitle){
                     localStorage.setItem('friendId',value.friendId);
+                    localStorage.setItem('sourceFriendID',value.sourceFriendID);
                     getChatFromPrivateChat(value.friendId,value.socialTypeID);
 
                     // ---------------------- private chat notifications ---------------
@@ -1007,5 +1001,38 @@ var searchContact = function(data){
     });
 }
 
+var addContactPrivateChat = function(ToID,FriendID,SATypeID,GroupName,callBack){
+    var data= {
+        "Header": {
+            "From": "",
+            "To": "",
+            "DateTime": "",
+            "PartnerID": "",
+            "DeviceType": "",
+            "DeviceOS": "",
+            "FromIP": "",
+            "Region": "enUS"
+        },
+        "Body": {
+            "ID": "",
+            "ObjectType": "1000",
+            "Action": "100",
+            "Data": {
+                "AccessKey" : localStorage['access_key'],
+                "ToID" : ToID,
+                "FriendID" : FriendID,
+                "SATypeID" : SATypeID,
+                "GroupName" : GroupName
+            }
+        }
+    }
 
+    socketIoCon.emit('addContactPrivateChat',JSON.stringify(data));
+    socketIoCon.removeAllListeners('addContactPrivateChat-result');
+    socketIoCon.on('addContactPrivateChat-result',function(response){
+        if(callBack){
+            callBack(response);
+        }
+    });
+}
 

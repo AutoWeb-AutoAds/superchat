@@ -5,7 +5,6 @@
         <div class="div-input"><input type="password" id="aim-password" placeholder="Password"></div>
         <div class="message-error" id="message-error"></div>
     </div>
-    <div class="float-right"><button type="button" id="btn-cancel-aim" class="btn btn-default">Cancel</button></div>
     <div class="float-right"><button type="button" id="btn-signin-aim-filter" class="btn btn-primary active">Sign In</button></div>
 </div>
 <script>
@@ -53,10 +52,6 @@
                     }
                 },'div-contact-scroll-left');
             });
-        });
-
-        $('#btn-cancel-aim').on('click',function(){
-            closeJqxWindowId('div-aim-login-pop');
         });
         $('#aim-username, #aim-password').keypress(function(event){
             var keycode = (event.keyCode ? event.keyCode : event.which);

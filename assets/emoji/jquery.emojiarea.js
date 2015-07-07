@@ -25,7 +25,7 @@
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 	$.emojiarea = {
-		path: '',
+		path: basePath,
 		icons: {},
 		defaults: {
 			button: null,

@@ -127,10 +127,12 @@ var getDetailInfo = function(id,cmd){
             loadYoutube();
         }).call(this);
         YoutubeVideo(id, function(video){
-            console.log(video);
+            //console.log(video);
             var url = video.getSource("video/mp4", "medium");
             var title = video.title;
-            viewVideo(url.original_url,video.iurlmq,cmd,title);
+            var videoID = video.video_id;
+            var mediaType = mediaTypes('number',cmd);
+            viewVideo(url.original_url,video.iurlmq,cmd,title,videoID,mediaType);
         });
     }else{
         $.ajax({
@@ -154,24 +156,29 @@ var streamPlayer = function(response,type){
     var lengthItem = jsData.Body.Videos.items.length -1;
     var liveStreaming = localStorage.getItem('live');
     var url = '',poster = '';
-    var displayName = '';
+    var displayName = '',videoID = '';
+    var mediaType = mediaTypes('number',type);
     console.log(jsData);
     if(liveStreaming == 'spotify'){
         url = jsData.Body.Videos.items.preview_url;
         poster = jsData.Body.Videos.items.album.images[0].url;
         displayName = jsData.Body.Videos.items.name;
+        videoID = jsData.Body.Videos.items.id;
     }else{
         if(lengthItem >= 0){
             if(liveStreaming =='itune') {
+                console.log(liveStreaming);
                 url = jsData.Body.Videos.items[lengthItem].previewUrl;
                 poster = jsData.Body.Videos.items[lengthItem].artworkUrl100;
-                displayName =jsData.Body.Videos.items.trackName;
+                displayName =jsData.Body.Videos.items[lengthItem].trackName;
+                videoID = jsData.Body.Videos.items[lengthItem].trackId;
             }else{
                 var lengthvideos = jsData.Body.Videos.items[lengthItem].videos.length -1;
                 if(lengthvideos >=0){
                     url = jsData.Body.Videos.items[lengthItem].videos[lengthvideos].url;
                     poster = jsData.Body.Videos.items[lengthItem].pictures.high.url;
                     displayName = jsData.Body.Videos.items[lengthItem].name;
+                    videoID = jsData.Body.Videos.items[lengthItem].id;
                 }
             }
         }else{
@@ -179,10 +186,15 @@ var streamPlayer = function(response,type){
         }
     }
     //play video goes here
-    viewVideo(url,poster,type,displayName);
+    viewVideo(url,poster,type,displayName,videoID,mediaType);
 }
 
-var viewVideo = function(url,poster,type,displayName){
+var viewVideo = function(url,poster,type,displayName,videoID,mediaType){
+    console.log(displayName+'-'+videoID+'-'+mediaType);
+    // call function ACTION_LOAD_MEDIA
+    var cosyncData = cosyncDataActionLoad(displayName,ownerID,videoID,mediaType);
+    //cosync()
+    console.log(GroupChat);
     var result ='';
     result += '<div class="playerStreaming" id="playerStreaming">';
     result += '<video id="video" controls height="455" width="900" data-mediaType="'+type+'" data-name="'+displayName+'" preload="none" mediagroup="myVideoGroup"  src="'+url+'" poster="'+poster+'" autoplay></video>';
@@ -234,6 +246,7 @@ var loadYoutube = function(){
         return sources;
     };
 }
+
 var youTubeVideoDetail = function(video_info,callback){
     var video;
     video = YoutubeVideo.decodeQueryString(video_info);
@@ -263,6 +276,9 @@ var youTubeVideoDetail = function(video_info,callback){
 
 // ****************************** Twitch API goes here *******************************
 var streamTwitch = function(channel,divResult){
+
+    // call function ACTION_LOAD_MEDIA
+    //ownerID
     $.getScript("//ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js", function() {
         var pathID= 'div-player-stream-result';
         window.onPlayerEvent = function (data) {
@@ -311,11 +327,10 @@ var hasMarkFavorite = function(){
             }
             listVideo.push(data);
         });
-        $.each(listVideo,function(index,value){
-            markVideoAsFavorite(value,function(data){
+        $.each(listVideo,function(index,val){
+            markVideoAsFavorite(val,function(data){
                 if(data.code == 1){
                     console.log(data);
-                    $('#'+value.VideoID).attr('disabled','disabled');
                 }else{
                     $('#msg_notifi').html(data.message.description);
                     $("#messageNotification").jqxNotification("open");
@@ -334,10 +349,12 @@ var hasRemoveFavoriteVideo = function(videoID,mediaType){
         }
     });
 }
+
 var isCollapse = function(data){
     var id = data.getAttribute('id');
     $("#collapse"+id).collapse('toggle');
 }
+
 var handle = function(e,getId) {
     if (e.keyCode === 13) {
         var btnLive = localStorage.getItem('live');
@@ -365,6 +382,7 @@ var getPopularVideo = function(url,result,callback){
         success: callback
     });
 }
+
 var hasPopularVideo = function(urlVideo,mediaType){
     var mediaImg = '';
     if(mediaType == 'youtube'){

@@ -74,10 +74,59 @@
     <div id="results-div"></div>
 </div>
 <script src="<?php echo base_url();?>assets/js/modules/linkedin.js"></script>
-<script src="<?php echo base_url();?>assets/js/modules/global-sync.js"></script>
+<!--<script src="--><?php //echo base_url();?><!--assets/js/modules/global-sync.js"></script>-->
 <script src="<?php echo base_url();?>assets/js/modules/facebook.js"></script>
 <script src="<?php echo base_url();?>assets/js/modules/g-plus.js"></script>
-<script src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>
+<script>
+    $(function(){
+        checkGoogleSession(function(result){
+            console.log(result);
+            if(result.code == 0){
+                $.getScript("https://apis.google.com/js/api:client.js", function() {
+                    loginGoogleAPI(function(objUser){
+                        var token = objUser.B.access_token;
+                        var email = objUser.getBasicProfile().getEmail();
+                        console.log(token);
+                        loginGoogle(email,token,function(){
+                            getFriendBySocialType(4,0,"","",function(result){
+                                console.log(result);
+                                var str = '';
+                                $.each(result.data,function(index,value){
+                                    var socialAvatar = value.SocialAvatar;
+                                    var displayName = value.DisplayName;
+                                    str +='<div class="friend-tr-block">';
+                                    str +='<div class="fb-imageAvatar twt-feed"><img src="'+socialAvatar+'"></div>';
+                                    str +='<div class="fb-friends-name"><div>'+displayName+'</div><div class="location"></div></div>';
+                                    str +='<div class="fb-addFriend"><img src="assets/image/Sync/check_02.png"></div>';
+                                    str +='</div>';
+                                });
+                                $('#results-div').append(str);
+                            },'results-div');
+
+                        });
+                    },'g-plus');
+                });
+            }else{
+                $('#g-plus').on('click',function(){
+                    getFriendBySocialType(4,0,"","",function(result){
+                        var str = '';
+                        $.each(result.data,function(index,value){
+                            var socialAvatar = value.SocialAvatar;
+                            var displayName = value.DisplayName !='' ? value.DisplayName:value.SocialAccountID;
+                            str +='<div class="friend-tr-block">';
+                            str +='<div class="fb-imageAvatar twt-feed"><img src="'+socialAvatar+'"></div>';
+                            str +='<div class="fb-friends-name"><div>'+displayName+'</div><div class="location"></div></div>';
+                            str +='<div class="fb-addFriend"><img src="assets/image/Sync/check_02.png"></div>';
+                            str +='</div>';
+                        });
+                        $('#results-div').html(str);
+                    },'results-div');
+                });
+            }
+        });
+    });
+</script>
+<!--<script src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>-->
 
 <!--linkedin connect to sever-->
 <script type="text/javascript" src="//platform.linkedin.com/in.js">

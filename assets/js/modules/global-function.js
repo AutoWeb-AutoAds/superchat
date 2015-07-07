@@ -97,7 +97,6 @@ var newJqxWindowVideo = function(prefix, windowTitle, windowWidth, windowHeight,
 			}
 			//if user click close action
 
-
 			$('#'+prefix).on('close',function(){
 				closeJqxWindowId(prefix);
 			});

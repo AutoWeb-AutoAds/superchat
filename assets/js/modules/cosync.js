@@ -44,55 +44,19 @@ var editPlaylistPopUp = function(PlaylistID,PlaylistName){
     newJqxWindow('div-edit-playlist','Edit playlist',300,500,editPlaylistPopUp,PlaylistID,PlaylistName);
 }
 
-var cosync = function(broadcastId,requestId,isPrivate,cosyncData,callback){
-    var coData = {
-        "Header": {
-            "From": "",
-            "To": "",
-            "DateTime": "",
-            "PartnerID": "",
-            "HubID": "",
-            "Type": "",
-            "DeviceType": "",
-            "DeviceOS": "",
-            "FromIP": "",
-            "Region": "enUS"
-        },
-        "Body": {
-            "ID": "",
-            "ObjectType": "1000",
-            "Action": "100",
-            "Data": {
-                "broadcastId" : broadcastId,
-                "requestId": requestId,
-                "isPrivate": isPrivate,
-                "cosyncData":cosyncData
-            }
-        }
-    }
-    socketIoCon.emit('cosync',JSON.stringify(coData));
-    socketIoCon.removeAllListeners('cosync-result');
-    socketIoCon.on('cosync-result',function(response){
-        //console.log(response);
-        if(callback){
-            callback(response);
-        }
-    });
-}
-
 var func_fadeTaggle = function(result){
     if(document.getElementById("video")){
         $("#"+result).fadeToggle();
         $("#chat-setting-header").fadeToggle();
     }else if(document.getElementsByTagName('object') && document.getElementsByTagName('object').length>0){
 
-        $("#"+result).fadeToggle();
-        $("#chat-setting-header").fadeToggle();
+            $("#"+result).fadeToggle();
+            $("#chat-setting-header").fadeToggle();
 
     }else{
         $("#messageNotification").jqxNotification({
             width: 270, position: "top-right", opacity: 0.9,
-            autoOpen: false, animationOpenDelay: 800, autoClose: true, autoCloseDelay: 16000, template: "info"
+            autoOpen: false, animationOpenDelay: 800, autoClose: true, autoCloseDelay: 3000, template: "info"
         });
         $('#msg_notifi').html('please select Video befor you Invite');
         $("#messageNotification").jqxNotification("open");
@@ -112,29 +76,6 @@ var func_searchFri = function(txt){
         });
         $('#btn-invite').html('<span class="spButton">Invite</span> ');
     })
-}
-
-var acceptCoInvite = function(data){
-
-    var GroupID = data.getAttribute('data-GroupID');
-    var isPrivate = 1;
-    if(GroupID != ''){
-        isPrivate =0;
-    }
-    var DisplayName = data.getAttribute('data-Chanel');
-    var ImageAvatar = data.getAttribute('data-ImageAvatar');
-    var senderID = data.getAttribute('data-senderID');
-    var ReceiverID = localStorage.getItem('user_id');
-    var url =  data.getAttribute('data-url');
-    var SocialMediaTypeID = data.getAttribute('data-SocialMediaTypeID');
-
-    var cosyncData = cosyncDataAccept(ReceiverID,ReceiverID,GroupID,ImageAvatar,DisplayName,senderID);
-
-    cosync(ReceiverID,'',isPrivate,cosyncData,function(){
-        newJqxWindowVideo('dataId','SuperChat','100%','100%',url,'',SocialMediaTypeID,DisplayName);
-
-    });
-
 }
 
 var GroupChat = {data:[]};
@@ -222,21 +163,26 @@ var func_createGroups = function(){
     var SocialMediaTypeID = '1';
     var Displayname = '';
     var url='';
-
+    var result = true;
     if(GroupChat.data.length>0){
         for(checkp =0; checkp < GroupChat.data.length; checkp++){
             $.each(GroupChat.data[checkp],function(index, value){
-                var jsObj = JSON.parse(value.addId);
-
-                $.each(jsObj, function(index , values){
-
-                    addMember.push(values.friendId);
-                });
-
+                    var jsObj = JSON.parse(value.addId);
+                    $.each(jsObj, function(index , values){
+                        result = addMember.every(function(element, index, array) {
+                            if (element == values.friendId) {
+                                return false;
+                            }
+                            return true;
+                        });
+                        if(result == true){
+                            addMember.push(values.friendId);
+                        }
+                    });
             });
-
         }
     }
+
     //if media is not twitch we use Video tag
     if(document.getElementById("video")){
         url = document.getElementById("video").getAttribute("src");
@@ -257,7 +203,6 @@ var func_createGroups = function(){
         }
     }
 
-
     if(addMember.length > 1){
 
         console.log('Group');
@@ -272,13 +217,116 @@ var func_createGroups = function(){
         //
         //    $('.jqx-icon-close').trigger( "click" );
         //});
-        cosData = cosyncData(SenderID,'55927923c69152240fc684f1',Displayname,url,1);
-        cosync('55927923c69152240fc684f1','',0,cosData);
+        addContactPrivateChat(addMember[0],addMember,1,'',function(response){
+            var obj = JSON.parse(response);
+            var usageData = JSON.parse(obj.Body.Data);
+
+            cosData = cosyncData(SenderID,usageData.groupID,Displayname,url,1);
+            cosync(usageData.groupID,'',0,cosData);
+        });
+
     }else{
 
         cosData = cosyncData(SenderID,'',Displayname,url,SocialMediaTypeID);
         cosync(addMember[0],'',1,cosData)
     }
+    func_fadeTaggle('chat-setting-body-stream');
+    $('#results-div').html('');
+}
+
+var func_CheckArray = function(value, index){
+
+}
+
+var cosync = function(broadcastId,requestId,isPrivate,cosyncData,callback){
+    var coData = {
+        "Header": {
+            "From": "",
+            "To": "",
+            "DateTime": "",
+            "PartnerID": "",
+            "HubID": "",
+            "Type": "",
+            "DeviceType": "",
+            "DeviceOS": "",
+            "FromIP": "",
+            "Region": "enUS"
+        },
+        "Body": {
+            "ID": "",
+            "ObjectType": "1000",
+            "Action": "100",
+            "Data": {
+                "broadcastId" : broadcastId,
+                "requestId": requestId,
+                "isPrivate": isPrivate,
+                "cosyncData":cosyncData
+            }
+        }
+    }
+    socketIoCon.emit('cosync',JSON.stringify(coData));
+    socketIoCon.removeAllListeners('cosync-result');
+    socketIoCon.on('cosync-result',function(response){
+        //console.log(response);
+        if(callback){
+            callback(response);
+        }
+    });
+}
+
+var acceptCoInvite = function(data){
+
+    var GroupID = data.getAttribute('data-GroupID');
+    var isPrivate = 1;
+    if(GroupID != ''){
+        isPrivate =0;
+    }
+    var DisplayName = data.getAttribute('data-Chanel');
+    var ImageAvatar = data.getAttribute('data-ImageAvatar');
+    var senderID = data.getAttribute('data-senderID');
+    var ReceiverID = localStorage.getItem('user_id');
+    var url =  data.getAttribute('data-url');
+    var SocialMediaTypeID = data.getAttribute('data-SocialMediaTypeID');
+
+    var cosyncData = cosyncDataAccept(ReceiverID,ReceiverID,GroupID,ImageAvatar,DisplayName,senderID);
+
+    cosync(senderID,'',isPrivate,cosyncData,function(){
+        newJqxWindowVideo('dataId','SuperChat','100%','100%',url,'',SocialMediaTypeID,DisplayName);
+    });
+}
+
+var cencelCoView = function(data){
+    var SenderID = localStorage.getItem('user_id');
+    var UserID = data.getAttribute('data-senderID');
+    var GroupID = data.getAttribute('data-GroupID');
+    var cosyncData = '';
+    if(GroupID !=''){
+        cosyncData = cosyncDataCancel(GroupID);
+        cosync(SenderID,'',0,cosyncData,function(response){
+            console.log(response);
+        });
+    }else{
+        cosyncData = cosyncDataCancel(UserID);
+        cosync(SenderID,'',1,cosyncData,function(response){
+            console.log(response);
+        });
+    }
+    $('#messageNotification').jqxNotification('closeAll');
+}
+
+var openCoViewFromChatAction = function(){
+    var DisplayName = 'M VCD VOL 37 -03.Kmean Het Pel Ouy Bong Srolang Ke Madong Tit (Kuma ft Takma).DAT';
+    var FromUserId = ownerID;
+    var BroadCastID='54d19f2fc691524676d1a6f0';
+    var cosyncData = cosyncDataOpen(DisplayName,FromUserId,BroadCastID);
+    cosync(BroadCastID,'',1,cosyncData,function(response){
+        console.log(response);
+    })
+
+}
+
+var loadCoView = function(){
+
 }
 
 var cosyncData = function(SenderID,GroupID,DisplayName,url,SocialMediaTypeID){
@@ -325,19 +373,44 @@ var cosyncDataAccept = function(ReceiverID,broadcastId,GroupID,ImageAvatar,Displ
     return cosyncData;
 }
 
-var cosyncDataCancel = function(){
+var cosyncDataCancel = function(UserID){
 
+    var cosynCancel = {
+        "cosyncData": {
+            "UserID": UserID
+        }
+    }
+    return cosynCancel;
 }
 
-var cosyncDataOpen = function(){
+var cosyncDataOpen = function(FromDisplayName,FromUserId,BroadCastID){
 
+    var cosyncData = {
+        "cosyncData":{
+            "FromDisplayName":FromDisplayName,
+            "FromUserId":FromUserId,
+            "BroadCastID":BroadCastID
+        }
+    }
+    return cosyncData;
 }
+
 var cosyncDataClose = function(){
 
 }
 
-var cosyncDataActionLoad = function(){
-
+var cosyncDataActionLoad = function(FromDisplayName,FromUserId,videoID,socialMediaTypeID){
+    var cosyncData = {
+        "cosyncData":{
+            "FromDisplayName":FromDisplayName,
+            "FromUserId":FromUserId,
+            "VideoData":{
+                "videoID":videoID,
+                "socialMediaTypeID":socialMediaTypeID
+            }
+        }
+    }
+    return cosyncData;
 }
 
 var cosyncDataActionResume = function(){
@@ -388,9 +461,9 @@ var createPlaylist = function(PlaylistName,callback){
     socketIoCon.on('createPlaylist-result', function (datas) {
         var json = JSON.parse(datas);
         var obj = JSON.parse(json.Body.Data);
-        if(callback){
-            callback(obj);
-        }
+            if(callback){
+                callback(obj);
+            }
     });
 
 };
@@ -398,7 +471,7 @@ var createPlaylist = function(PlaylistName,callback){
 var getPlaylist = function(callback){
     var getPlaylist = {
         "Header": {
-            "From": "",
+        "From": "",
             "To": "",
             "DateTime": "",
             "PartnerID": "",
@@ -408,13 +481,13 @@ var getPlaylist = function(callback){
             "DeviceOS": "",
             "FromIP": "",
             "Region": "enUS"
-        },
+    },
         "Body": {
-            "ID": "",
+        "ID": "",
             "ObjectType": "1000",
             "Action": "100",
             "Data": {
-                "AccessKey" : localStorage['access_key'],
+            "AccessKey" : localStorage['access_key'],
                 "Limit":"",
                 "Offset":""
             }
@@ -427,9 +500,9 @@ var getPlaylist = function(callback){
         var json = JSON.parse(datas);
         var obj = JSON.parse(json.Body.Data);
 
-        if(callback){
-            callback(obj);
-        }
+            if(callback){
+                callback(obj);
+            }
 
     });
 }

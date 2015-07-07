@@ -2,25 +2,6 @@ var filterSocial = function(result){
     var socialTypeID = result.getAttribute('data-social-type');
     console.log(socialTypeID);
     if(socialTypeID == 2) { //facebook
-
-    }else if(socialTypeID == 4){ //gtalk
-        checkGoogleSession(function(result){
-            if(result.code == 0){
-                //google login form goes here
-                $.getScript("https://apis.google.com/js/api:client.js", function() {
-                    loginGoogleAPI(function(objUser){
-                        var token = objUser.B.access_token;
-                        var email = objUser.getBasicProfile().getEmail();
-                        console.log(token);
-                        loginGoogle(email,token,function(){
-                            listGoogleFriends();
-                        });
-                    },'chat-google');
-                });
-            }else{
-                listGoogleFriends();
-            }
-        });
     }else if(socialTypeID == 5) { //Yahoo messenger
         checkYahooSession(function (result) {
             if (result.code == 0) {

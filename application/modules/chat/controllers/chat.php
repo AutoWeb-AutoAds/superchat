@@ -136,4 +136,7 @@ class Chat extends MX_Controller {
 	public function AIMLogin(){
 		$this->load->view('aim-login');
 	}
+	public function  sessionExpired(){
+		$this->load->view('session-expired');
+	}
 }
