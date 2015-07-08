@@ -206,39 +206,39 @@ var func_createGroups = function(){
     if(addMember.length > 1){
 
         console.log('Group');
-        //func_createGroupChat(1,"","",addMember,function(reslut){
-        //
-        //    var userData = reslut.data;
-        //    var val_groupID = userData.groupID;
-        //    var val_groupName = userData.groupName;
-        //    var val_owerID = userData.ownerID;
-        //
-        //    cosync(val_groupID,'',0,cosyncData);
-        //
-        //    $('.jqx-icon-close').trigger( "click" );
-        //});
+        console.log(GroupIDCoView);
         addContactPrivateChat(addMember[0],addMember,1,'',function(response){
             var obj = JSON.parse(response);
             var usageData = JSON.parse(obj.Body.Data);
-
-            cosData = cosyncData(SenderID,usageData.groupID,Displayname,url,1);
-            cosync(usageData.groupID,'',0,cosData);
+            GroupIDCoView = usageData.groupID;
+            cosData = cosyncData(SenderID,GroupIDCoView,Displayname,url,SocialMediaTypeID);
+            cosync(200,usageData.GroupIDCoView,'',0,cosData);
         });
-
+        console.log('this is your groupID : '+GroupIDCoView);
     }else{
+        if(GroupIDCoView !=''){
+            addContactToGroupChat(GroupIDCoView,addMember);
+            cosData = cosyncData(SenderID,GroupIDCoView,Displayname,url,SocialMediaTypeID);
+            cosync(usageData.GroupIDCoView,'',0,cosData);
+        }else{
+            cosData = cosyncData(SenderID,'',Displayname,url,SocialMediaTypeID);
+            cosync(200,addMember[0],'',1,cosData);
+        }
 
-        cosData = cosyncData(SenderID,'',Displayname,url,SocialMediaTypeID);
-        cosync(addMember[0],'',1,cosData)
+
     }
     func_fadeTaggle('chat-setting-body-stream');
     $('#results-div').html('');
+    $('#btn-invite').html('');
+    $('#search-friend').html('');
+
 }
 
 var func_CheckArray = function(value, index){
 
 }
 
-var cosync = function(broadcastId,requestId,isPrivate,cosyncData,callback){
+var cosync = function(Action,broadcastId,requestId,isPrivate,cosyncData,callback){
     var coData = {
         "Header": {
             "From": "",
@@ -255,7 +255,7 @@ var cosync = function(broadcastId,requestId,isPrivate,cosyncData,callback){
         "Body": {
             "ID": "",
             "ObjectType": "1000",
-            "Action": "100",
+            "Action": Action,
             "Data": {
                 "broadcastId" : broadcastId,
                 "requestId": requestId,
@@ -267,7 +267,7 @@ var cosync = function(broadcastId,requestId,isPrivate,cosyncData,callback){
     socketIoCon.emit('cosync',JSON.stringify(coData));
     socketIoCon.removeAllListeners('cosync-result');
     socketIoCon.on('cosync-result',function(response){
-        //console.log(response);
+        console.log(response);
         if(callback){
             callback(response);
         }
@@ -290,7 +290,7 @@ var acceptCoInvite = function(data){
 
     var cosyncData = cosyncDataAccept(ReceiverID,ReceiverID,GroupID,ImageAvatar,DisplayName,senderID);
 
-    cosync(senderID,'',isPrivate,cosyncData,function(){
+    cosync(201,senderID,'',isPrivate,cosyncData,function(){
         newJqxWindowVideo('dataId','SuperChat','100%','100%',url,'',SocialMediaTypeID,DisplayName);
     });
 }
@@ -302,12 +302,12 @@ var cencelCoView = function(data){
     var cosyncData = '';
     if(GroupID !=''){
         cosyncData = cosyncDataCancel(GroupID);
-        cosync(SenderID,'',0,cosyncData,function(response){
+        cosync(202,SenderID,'',0,cosyncData,function(response){
             console.log(response);
         });
     }else{
         cosyncData = cosyncDataCancel(UserID);
-        cosync(SenderID,'',1,cosyncData,function(response){
+        cosync(202,SenderID,'',1,cosyncData,function(response){
             console.log(response);
         });
     }

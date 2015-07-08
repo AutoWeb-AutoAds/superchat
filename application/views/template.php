@@ -41,6 +41,8 @@
 <script src="<?php echo base_url();?>assets/jqx-lib/js/jqx-all.js"></script>
 <script src="<?php echo base_url();?>assets/jqx-lib/js/jqxcore.js"></script>
 
+
+
 <script src="<?php echo base_url();?>assets/js/modules/jquery.form.js"></script>
 
 <!--Show alert message in the browser title bar-->
@@ -58,5 +60,11 @@
 <script src="<?php echo base_url();?>assets/js/modules/g-plus.js"></script>
 <script src="<?php echo base_url();?>assets/js/modules/live-stream.js"></script>
 <script src="<?php echo base_url();?>assets/js/modules/cosync.js"></script>
+
+<!--include emoji-->
+<script src="<?php echo base_url();?>assets/emoji/jquery.emojiarea.js"></script>
+<script src="<?php echo base_url();?>assets/emoji/packs/basic/emojis.js"></script>
+<link href="<?php echo base_url();?>assets/emoji/jquery.emojiarea.css" rel="stylesheet" />
+
 </body>
 </html>

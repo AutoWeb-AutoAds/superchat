@@ -203,8 +203,6 @@ var viewVideo = function(url,poster,type,displayName,videoID,mediaType){
     init();
 }
 
-
-
 // ******************************** Youtube API goes here ************************
 var loadYoutube = function(){
     window.YoutubeVideo = function(video_id, callback) {
@@ -364,6 +362,7 @@ var handle = function(e,getId) {
         queryVideoByMedia(btnLive,'enter');
     }
 }
+
 var handleSearch = function(e,data) {
     if (e.keyCode === 13) {
         var  txts =data.getAttribute('data-search');

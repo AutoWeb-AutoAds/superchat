@@ -34,7 +34,10 @@
     <div class="chat-container" id="msgResult_<?php echo $friendId;?>"></div>
     <!-- Chat notification left panel-->
     <div class="notificationContainer" id="notification-container-left<?php echo $friendId;?>">
-        <div class="notificationTitle" id="notificationTitle<?php echo $friendId;?>">Stickers</div>
+        <div class="notificationTitle" id="notificationTitle<?php echo $friendId;?>">
+            <div class="float-left">Stickers</div>
+            <div class="float-right" id="emojis"></div>
+        </div>
         <div id="notificationsBody<?php echo $friendId;?>" class="notificationsBody">
             <?php
             $img_dir = "./assets/image/sticker/ant/";
@@ -100,7 +103,6 @@
                 </div>
             </div>
             <div class="send-msg-icon" id="btn-send_<?php echo $friendId;?>" data-chatType="<?php echo $chatType;?>" data-socialTypeID="<?php echo $socialTypeID;?>" data-friendID="<?php echo $friendId;?>" onclick="sendTextChat(this)"></div>
-            <div><input class="emojis-wysiwyg"></div>
         </form>
 
     </div>
@@ -148,7 +150,7 @@
 
 <script>
     $(document).ready(function(e){
-        $('.emojis-wysiwyg').emojiarea();
+        $('#emojis').emojiarea();
 
 
 

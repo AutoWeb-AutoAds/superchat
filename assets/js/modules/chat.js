@@ -302,6 +302,7 @@ var getPrivateNotificationChat = function(){
         var output = JSON.parse(response);
         var action = output.Body.Action;
         var dataListen = output.Body.Data.data;
+        console.log(dataListen);
         switch (action){
             case "ADD_PRIVATE_CHAT":
                 addPrivateChat(dataListen);
@@ -334,8 +335,17 @@ var getPrivateNotificationChat = function(){
             case "UNFRIEND":
                 hasUnfriend(dataListen);
                 break;
-            case "100":
+            case 200:
                 func_IntiCoview(dataListen);
+                break;
+            case 201:
+                console.log(dataListen);
+                break;
+            case 202:
+                console.log(dataListen);
+                break;
+            case 203:
+                console.log(dataListen);
                 break;
             case "RECEIVE_CHAT_GOOGLE":
                 console.log(output);
@@ -442,7 +452,7 @@ var getPublicNotificationChat = function(){
                     alwaysVisible: true
                 });
                 break;
-            case "100":
+            case "200":
                 func_IntiCoview(dataListen);
                 break;
 

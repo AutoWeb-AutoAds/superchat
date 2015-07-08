@@ -2,7 +2,7 @@
     $(document).ready(function(){
         $("#messageNotification").jqxNotification({
             width: 270, position: "top-right", opacity: 0.9,
-            autoOpen: false, animationOpenDelay: 800, autoClose: true, autoCloseDelay: 16000, template: ""
+            autoOpen: false, animationOpenDelay: 800, autoClose: false, autoCloseDelay: 16000, template: ""
         });
 
         var tabModuleId = $.jqx.cookie.cookie('tabModuleId');

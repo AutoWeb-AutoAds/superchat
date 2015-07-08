@@ -593,7 +593,7 @@ var ignoreFriendRequest = function(FriendID){
 }
 
 var func_IntiCoview = function(response){
-    console.log(response);
+    //console.log(response);
     var result = localStorage.getItem('allFriends');
     var usageData = JSON.parse(result);
     var senderID = response.cosyncData.cosyncData.SenderID;
