@@ -302,7 +302,7 @@ var getPrivateNotificationChat = function(){
         var output = JSON.parse(response);
         var action = output.Body.Action;
         var dataListen = output.Body.Data.data;
-        console.log(dataListen);
+        //console.log(dataListen);
         switch (action){
             case "ADD_PRIVATE_CHAT":
                 addPrivateChat(dataListen);
