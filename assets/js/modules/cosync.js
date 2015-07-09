@@ -110,7 +110,6 @@ var addContact = function(userId){
                 });
             }
             if(statusId == false){
-
                 var friendList = [{"title":addName,"friendId":addId}];
                 var ArrfriendId =[{"addId":JSON.stringify(friendList)}];
                 GroupChat.data[GroupChat.data.length]= ArrfriendId;
@@ -202,56 +201,82 @@ var func_createGroups = function(){
             SocialMediaTypeID = 7;
         }
     }
-    console.log(addMember);
+    console.log(GroupIDCoView+' is group ID');
     if(addMember.length > 1){
 
         if(GroupIDCoView !=''){
-            addContactsToGroupChat(GroupIDCoView,addMember);
-            cosData = cosyncData(SenderID,GroupIDCoView,Displayname,url,SocialMediaTypeID);
-            cosync(305,GroupIDCoView,'',0,cosData,function(response){
-                var obj = JSON.parse(response);
-                var usageData = JSON.parse(obj.Body.Data);
-                GroupIDCoView = usageData.data.GroupID;
-            });
-        }else{
-            //cosData = cosyncData(SenderID,'559cccedc6915209032b03af',Displayname,url,SocialMediaTypeID);
-            //
-            //cosync(305,'559cccedc6915209032b03af','',0,cosData,function(response){
+            //addContactsToGroupChat(GroupIDCoView,addMember);
+            //cosData = cosyncData(SenderID,GroupIDCoView,Displayname,url,SocialMediaTypeID);
+            //cosync(305,GroupIDCoView,'',0,cosData,function(response){
             //    var obj = JSON.parse(response);
             //    var usageData = JSON.parse(obj.Body.Data);
-            //    GroupIDCoView =usageData.data.cosyncData.cosyncData.GroupID;
-            //    console.log(usageData.data.cosyncData.cosyncData.GroupID);
-            //    GroupChat = {data:[]};
+            //    GroupIDCoView = usageData.data.GroupID;
+            //    console.log(obj);
             //});
-            addContactPrivateChat(addMember[0],addMember,1,'',function(response){
+            cosData = cosyncData(SenderID,'554c7a9ac691524a7761e81d',Displayname,url,SocialMediaTypeID);
+
+            cosync(305,'554c7a9ac691524a7761e81d','',0,cosData,function(response){
                 var obj = JSON.parse(response);
                 var usageData = JSON.parse(obj.Body.Data);
-                console.log(usageData.data.groupID);
-                cosData = cosyncData(SenderID,usageData.data.groupID,Displayname,url,SocialMediaTypeID);
-
-                cosync(305,usageData.data.groupID,'',0,cosData,function(response){
-                    var obj = JSON.parse(response);
-                    var usageData = JSON.parse(obj.Body.Data);
-                    GroupIDCoView =usageData.data.cosyncData.cosyncData.GroupID;
-                    console.log(usageData.data.cosyncData.cosyncData.GroupID);
-                    GroupChat = {data:[]};
-                });
+                GroupIDCoView = '554c7a9ac691524a7761e81d';
+                //GroupIDCoView =usageData.data.cosyncData.cosyncData.GroupID;
+                //console.log(usageData.data.cosyncData.cosyncData.GroupID);
+                GroupChat = {data:[]};
             });
+        }else{
+            cosData = cosyncData(SenderID,'554c7a9ac691524a7761e81d',Displayname,url,SocialMediaTypeID);
+
+            cosync(305,'554c7a9ac691524a7761e81d','',0,cosData,function(response){
+                var obj = JSON.parse(response);
+                var usageData = JSON.parse(obj.Body.Data);
+                GroupIDCoView = '554c7a9ac691524a7761e81d';
+                //GroupIDCoView =usageData.data.cosyncData.cosyncData.GroupID;
+                //console.log(usageData.data.cosyncData.cosyncData.GroupID);
+                GroupChat = {data:[]};
+            });
+            //var ToID = addMember[0];
+            //var FriendList = addMember.splice(1,addMember.length -1);
+            //addContactPrivateChat(ToID,FriendList,1,'',function(response){
+            //    var obj = JSON.parse(response);
+            //    var usageData = JSON.parse(obj.Body.Data);
+            //    console.log(usageData);
+            //    cosData = cosyncData(SenderID,usageData.data.groupID,Displayname,url,SocialMediaTypeID);
+            //
+            //    cosync(305,usageData.data.groupID,'',0,cosData,function(response){
+            //        var obj = JSON.parse(response);
+            //        var usageData = JSON.parse(obj.Body.Data);
+            //        console.log(obj);
+            //        GroupIDCoView =usageData.data.cosyncData.cosyncData.GroupID;
+            //        console.log(usageData.data.cosyncData.cosyncData.GroupID);
+            //        GroupChat = {data:[]};
+            //    });
+            //});
         }
 
     }else{
         if(GroupIDCoView !=''){
-            console.log('GroupIDCoView'+addMember);
-            addContactToGroupChat(GroupIDCoView,addMember);
-            cosData = cosyncData(SenderID,GroupIDCoView,Displayname,url,SocialMediaTypeID);
-            cosync(305,GroupIDCoView,'',0,cosData,function(response){
+            //console.log('GroupIDCoView'+addMember);
+            //addContactToGroupChat(GroupIDCoView,addMember);
+            //cosData = cosyncData(SenderID,GroupIDCoView,Displayname,url,SocialMediaTypeID);
+            //cosync(305,GroupIDCoView,'',0,cosData,function(response){
+            //    var obj = JSON.parse(response);
+            //    var usageData = JSON.parse(obj.Body.Data);
+            //    GroupIDCoView = usageData.data.GroupID;
+            //    console.log(obj);
+            //});
+            cosData = cosyncData(SenderID,'554c7a9ac691524a7761e81d',Displayname,url,SocialMediaTypeID);
+
+            cosync(305,'554c7a9ac691524a7761e81d','',0,cosData,function(response){
                 var obj = JSON.parse(response);
                 var usageData = JSON.parse(obj.Body.Data);
-                GroupIDCoView = usageData.data.GroupID;
+                GroupIDCoView = '554c7a9ac691524a7761e81d';
+                //GroupIDCoView =usageData.data.cosyncData.cosyncData.GroupID;
+                //console.log(usageData.data.cosyncData.cosyncData.GroupID);
+                GroupChat = {data:[]};
             });
         }else{
-            cosData = cosyncData(SenderID,'',Displayname,url,SocialMediaTypeID);
-            cosync(200,addMember[0],'',1,cosData);
+            //cosData = cosyncData(SenderID,'',Displayname,url,SocialMediaTypeID);
+            //cosync(200,addMember[0],'',1,cosData);
         }
 
 
@@ -320,7 +345,7 @@ var acceptCoInvite = function(data){
     var cosyncData = cosyncDataAccept(ReceiverID,ReceiverID,GroupID,ImageAvatar,DisplayName,senderID);
 
     cosync(201,senderID,'',isPrivate,cosyncData,function(){
-        newJqxWindowVideo('dataId','SuperChat','880','700',url,'',SocialMediaTypeID,DisplayName);
+        newJqxWindowVideo('dataId',DisplayName,'880','700',url,'',SocialMediaTypeID,DisplayName);
     });
 }
 
@@ -457,7 +482,6 @@ var cosyncDataActionSeek = function(){
 var cosyncDataActionShare = function(){
 
 }
-
 
 var createPlaylist = function(PlaylistName,callback){
 
@@ -655,6 +679,7 @@ var pushVideoToPlaylist = function(PlaylistID,VideoID,MediaType,VideoTitle,Video
         }
     });
 }
+
 var listFavoriteVideos = function(callback){
     var favoriteVideo = {
         "Header": {

@@ -347,6 +347,9 @@ var getPrivateNotificationChat = function(){
             case 203:
                 console.log(dataListen);
                 break;
+            case 305:
+                console.log(dataListen);
+                break;
             case "RECEIVE_CHAT_GOOGLE":
                 console.log(output);
                 console.log('receive chat gtalk');
@@ -368,7 +371,7 @@ var getPublicNotificationChat = function(){
         var output = JSON.parse(response);
         var action = output.Body.Action;
         var dataListen = output.Body.Data.data;
-        console.log(dataListen);
+        console.log(action);
         switch (action){
             case "ADD_CHAT_TO_GROUP_CHAT":
                 //console.log(dataListen);
@@ -714,8 +717,7 @@ var addContactToGroupChat = function(GroupID,FriendID,callBack){
             }
         }
     }
-    console.log(GroupID);
-    console.log(FriendID);
+
     socketIoCon.emit('addContactToGroupChat',JSON.stringify(datas));
     socketIoCon.removeAllListeners('addContactToGroupChat-result');
     socketIoCon.on('addContactToGroupChat-result',function(result){
