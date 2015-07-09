@@ -202,24 +202,53 @@ var func_createGroups = function(){
             SocialMediaTypeID = 7;
         }
     }
-
+    console.log(addMember);
     if(addMember.length > 1){
 
-        console.log('Group');
-        console.log(GroupIDCoView);
-        addContactPrivateChat(addMember[0],addMember,1,'',function(response){
-            var obj = JSON.parse(response);
-            var usageData = JSON.parse(obj.Body.Data);
-            GroupIDCoView = usageData.groupID;
+        if(GroupIDCoView !=''){
+            addContactsToGroupChat(GroupIDCoView,addMember);
             cosData = cosyncData(SenderID,GroupIDCoView,Displayname,url,SocialMediaTypeID);
-            cosync(200,usageData.GroupIDCoView,'',0,cosData);
-        });
-        console.log('this is your groupID : '+GroupIDCoView);
+            cosync(305,GroupIDCoView,'',0,cosData,function(response){
+                var obj = JSON.parse(response);
+                var usageData = JSON.parse(obj.Body.Data);
+                GroupIDCoView = usageData.data.GroupID;
+            });
+        }else{
+            //cosData = cosyncData(SenderID,'559cccedc6915209032b03af',Displayname,url,SocialMediaTypeID);
+            //
+            //cosync(305,'559cccedc6915209032b03af','',0,cosData,function(response){
+            //    var obj = JSON.parse(response);
+            //    var usageData = JSON.parse(obj.Body.Data);
+            //    GroupIDCoView =usageData.data.cosyncData.cosyncData.GroupID;
+            //    console.log(usageData.data.cosyncData.cosyncData.GroupID);
+            //    GroupChat = {data:[]};
+            //});
+            addContactPrivateChat(addMember[0],addMember,1,'',function(response){
+                var obj = JSON.parse(response);
+                var usageData = JSON.parse(obj.Body.Data);
+                console.log(usageData.data.groupID);
+                cosData = cosyncData(SenderID,usageData.data.groupID,Displayname,url,SocialMediaTypeID);
+
+                cosync(305,usageData.data.groupID,'',0,cosData,function(response){
+                    var obj = JSON.parse(response);
+                    var usageData = JSON.parse(obj.Body.Data);
+                    GroupIDCoView =usageData.data.cosyncData.cosyncData.GroupID;
+                    console.log(usageData.data.cosyncData.cosyncData.GroupID);
+                    GroupChat = {data:[]};
+                });
+            });
+        }
+
     }else{
         if(GroupIDCoView !=''){
+            console.log('GroupIDCoView'+addMember);
             addContactToGroupChat(GroupIDCoView,addMember);
             cosData = cosyncData(SenderID,GroupIDCoView,Displayname,url,SocialMediaTypeID);
-            cosync(usageData.GroupIDCoView,'',0,cosData);
+            cosync(305,GroupIDCoView,'',0,cosData,function(response){
+                var obj = JSON.parse(response);
+                var usageData = JSON.parse(obj.Body.Data);
+                GroupIDCoView = usageData.data.GroupID;
+            });
         }else{
             cosData = cosyncData(SenderID,'',Displayname,url,SocialMediaTypeID);
             cosync(200,addMember[0],'',1,cosData);
@@ -239,6 +268,7 @@ var func_CheckArray = function(value, index){
 }
 
 var cosync = function(Action,broadcastId,requestId,isPrivate,cosyncData,callback){
+
     var coData = {
         "Header": {
             "From": "",
@@ -267,7 +297,6 @@ var cosync = function(Action,broadcastId,requestId,isPrivate,cosyncData,callback
     socketIoCon.emit('cosync',JSON.stringify(coData));
     socketIoCon.removeAllListeners('cosync-result');
     socketIoCon.on('cosync-result',function(response){
-        console.log(response);
         if(callback){
             callback(response);
         }
@@ -291,7 +320,7 @@ var acceptCoInvite = function(data){
     var cosyncData = cosyncDataAccept(ReceiverID,ReceiverID,GroupID,ImageAvatar,DisplayName,senderID);
 
     cosync(201,senderID,'',isPrivate,cosyncData,function(){
-        newJqxWindowVideo('dataId','SuperChat','100%','100%',url,'',SocialMediaTypeID,DisplayName);
+        newJqxWindowVideo('dataId','SuperChat','880','700',url,'',SocialMediaTypeID,DisplayName);
     });
 }
 

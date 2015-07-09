@@ -452,7 +452,7 @@ var getPublicNotificationChat = function(){
                     alwaysVisible: true
                 });
                 break;
-            case "200":
+            case 305:
                 func_IntiCoview(dataListen);
                 break;
 
@@ -689,7 +689,7 @@ var func_createGroupChat = function(GTypeID,GroupName,GroupAvatar,MemberID,func_
 
 }// end function create group chat
 
-var addContactToGroupChat = function(GroupID,FriendID){
+var addContactToGroupChat = function(GroupID,FriendID,callBack){
     var datas ={
         "Header": {
             "From": "",
@@ -714,16 +714,55 @@ var addContactToGroupChat = function(GroupID,FriendID){
             }
         }
     }
-
-
+    console.log(GroupID);
     console.log(FriendID);
     socketIoCon.emit('addContactToGroupChat',JSON.stringify(datas));
     socketIoCon.removeAllListeners('addContactToGroupChat-result');
     socketIoCon.on('addContactToGroupChat-result',function(result){
         console.log(result);
+        if(callBack){
+            callBack(result);
+        }
     });
 }
 
+
+var addContactsToGroupChat = function(GroupID,FriendID,callBack){
+
+    var data={
+        "Header": {
+            "From": "",
+            "To": "",
+            "DateTime": "",
+            "PartnerID": "",
+            "DeviceType": "",
+            "DeviceOS": "",
+            "FromIP": "",
+            "Region": "enUS"
+        },
+        "Body": {
+            "ID": "",
+            "ObjectType": "1000",
+            "Action": "100",
+            "Data": {
+                "AccessKey" : localStorage['access_key'],
+                "FriendID" : FriendID,
+                "GroupID" : GroupID,
+                "ListFriend" : '',
+                "Option" : ''
+            }
+        }
+    }
+
+    socketIoCon.emit('addContactsToGroupChat',JSON.stringify(data));
+    socketIoCon.removeAllListeners('addContactsToGroupChat-result');
+    socketIoCon.on('addContactsToGroupChat-result',function(result){
+        console.log(result);
+        if(callBack){
+            callBack(result);
+        }
+    });
+}
 /*----------------Initializing Tab Chat------------------------*/
 var func_addTab = function(str_title,friendId,sourceFriendID,eventLoad,func_type,SIPUser,socialTypeID){
     var tabIndex = localStorage.getItem('tabIndex');
@@ -1036,10 +1075,10 @@ var addContactPrivateChat = function(ToID,FriendID,SATypeID,GroupName,callBack){
             }
         }
     }
-
     socketIoCon.emit('addContactPrivateChat',JSON.stringify(data));
     socketIoCon.removeAllListeners('addContactPrivateChat-result');
     socketIoCon.on('addContactPrivateChat-result',function(response){
+        console.log(response);
         if(callBack){
             callBack(response);
         }
